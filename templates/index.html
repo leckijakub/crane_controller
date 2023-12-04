@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Movement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3vw;
+            height: 100vh;
+            width: 100hv;
+        }
+
+        .vertical-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3vw;
+        }
+
+        .horizontal-buttons {
+            display: flex;
+            gap: 3vw; /* Add some gap between the buttons */
+            align-items: center;
+        }
+
+        button {
+            height:30vh;
+            width:30vw;
+            font-size: 7rem;
+            text-align: center;
+            cursor: pointer;
+            user-select:none;
+        }
+
+        #up {
+            background-color: #3498db;
+        }
+
+        #down {
+            background-color: #e74c3c;
+        }
+
+        #left {
+            background-color: #2ecc71;
+        }
+
+        #right {
+            background-color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Panel sterowania Dźwigu</h1>
+        <div class="button-container">
+            <div class="horizontal-buttons">
+                <button id="left">&#8592;</button>
+                <button id="right">&#8594;</button>
+            </div>
+            <div class="vertical-buttons">
+                <button id="up">&#8593;</button>
+                <button id="down">&#8595;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const upButton = document.getElementById('up');
+        const downButton = document.getElementById('down');
+        const leftButton = document.getElementById('left');
+        const rightButton = document.getElementById('right');
+
+        const socket = new WebSocket('ws://192.168.4.1/control');
+
+        // Define your button click handlers here
+        upButton.addEventListener('touchstart', () => {
+            // Add your code for vertical movement (up) here
+            console.log('Up button clicked');
+            socket.send("3");
+        });
+        upButton.addEventListener("touchend", function(e) {
+            console.log('Up button released');
+            socket.send("0");
+        }, false);
+
+        downButton.addEventListener('touchstart', () => {
+            // Add your code for vertical movement (down) here
+            console.log('Down button clicked');
+            socket.send("4")
+        });
+        downButton.addEventListener("touchend", function(e) {
+            console.log('Down button released');
+            socket.send("0");
+        }, false);
+
+        leftButton.addEventListener('touchstart', () => {
+            // Add your code for horizontal movement (left) here
+            console.log('Left button clicked');
+            socket.send("1")
+        });
+        leftButton.addEventListener("touchend", function(e) {
+            console.log('Left button released');
+            socket.send("0");
+        }, false);
+
+        rightButton.addEventListener('touchstart', () => {
+            // Add your code for horizontal movement (right) here
+            console.log('Right button clicked');
+            socket.send("2");
+        });
+        rightButton.addEventListener("touchend", function(e) {
+            console.log('Right button released');
+            socket.send("0");
+        }, false);
+    </script>
+</body>
+</html>
